@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PlatziConf</string>
+    <string name="app_name">PlatziConfProject</string>
 
     <string name="inicio_frag_tv_que_es">¿Qué es PlatziConf?</string>
     <string name="inicio_frag_tv_que_es_resp">Platzi una vez más, cómo todos los años, hace el evento más grande de comunidad tecnológica en los que apasionados por aprender, emprender e innovar se encuentran en un mismo lugar para escuchar a expertos de la industria que durante horas comparten su conocimiento.</string>

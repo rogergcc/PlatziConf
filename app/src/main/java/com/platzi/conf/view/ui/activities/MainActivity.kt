@@ -1,6 +1,7 @@
 package com.platzi.conf.view.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
@@ -21,8 +22,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setActionBar(findViewById(R.id.toolbarMain))
+//        setDataFirestore()
+
         configNav()
-        //setDataFirestore()
     }
 
     private fun setDataFirestore() {
@@ -304,12 +306,14 @@ class MainActivity : AppCompatActivity() {
                     "                \"description\" : \"Hoy vamos a hablar de como desarrollar tu carrera profesional pero en tecnología, porque hay otras carreras que tienen menos crecimiento que la carrera de tecnología, cuando ustedes trabajan en tecnología ustedes entran en una carrera que tiene desempleo negativo, una carrera que tiene la demanda más fuerte del mercado, si nosotros vemos los sueldos en los últimos años en tecnología, en el 2013 el desarrollador de software promedio en Latinoamérica ganaba alrededor de 1100 dólares, hoy en el 2018 el desarrollador de software promedio gana 1650 dólares, pero el top 25% de desarrolladores de software ganan 2500 dólares en promedio, normalmente el rango el gradiente de sueldos de los estudiantes de Platzi que estudian un año o más es de 1000 a 3500 dólares al mes en Latinoamérica.\",\n" +
                     "                \"speaker\" : \"Freddy Vega\",\n" +
                     "                \"tag\" : \"Motivacional\",\n" +
-                    "                \"title\" : \"Cómo desarrollar tu carrera profesional en tecnología\"\n" +
+                    "                \"title\" : \"Desarrolla tu carrera profesional en tecnología\"\n" +
                     "            }\n" +
                     "        ]"
         )
 
         val firebaseFirestore = FirebaseFirestore.getInstance()
+
+        try {
 
 
         for (i in 0 until jsonArr.length()) {
@@ -323,26 +327,33 @@ class MainActivity : AppCompatActivity() {
             speaker.image = aux.getString("image")
             speaker.category = aux.getInt("category")
 
-            firebaseFirestore.collection("speakerscollection").document().set(speaker)
+            firebaseFirestore.collection("speakers").document().set(speaker)
         }
 
 
-//        for (i in 0 until jsonArr2.length()) {
-//            val aux = jsonArr2.get(i) as JSONObject
-//            var conference = Conference()
-//            conference.title = aux.getString("title")
-//            conference.description = aux.getString("description")
-//            conference.tag = aux.getString("tag")
-//            // La hora queremos que se guarde como variable de calendario
-//            // y el formato tiene que ser 'date':
-//            val cal = Calendar.getInstance()
-//            // Convertimos al tiempo actual que tenemos nosotros:
-//            cal.timeInMillis = aux.getLong("datetime") * 1000
-//            conference.datetime = cal.time
-//            conference.speaker = aux.getString("speaker")
-//
-//            firebaseFirestore.collection("conferences").document().set(conference)
-//        }
+        for (i in 0 until jsonArr2.length()) {
+            val aux = jsonArr2.get(i) as JSONObject
+            var conference = Conference()
+            conference.title = aux.getString("title")
+            conference.description = aux.getString("description")
+            conference.tag = aux.getString("tag")
+            // La hora queremos que se guarde como variable de calendario
+            // y el formato tiene que ser 'date':
+            val cal = Calendar.getInstance()
+            // Convertimos al tiempo actual que tenemos nosotros:
+            cal.timeInMillis = aux.getLong("datetime") * 1000
+            conference.datetime = cal.time
+            conference.speaker = aux.getString("speaker")
+
+            firebaseFirestore.collection("conferences").document().set(conference)
+        }
+        }catch (ex: Exception){
+            Toast.makeText(this, "algo ocurrio -", Toast.LENGTH_SHORT).show()
+            Log.e("PlatziSChedule","ocurrio algo inesperado...")
+
+        }
+
+
     }
 
     private fun configNav() {
